@@ -84,12 +84,12 @@ const CartProvider = ({ children }) => {
 
   // todo Update the quantity of an item in the cart
   const updateItemQuantity = (product, quantity) => {
-    // todo 
+    dispatch({type:UPDATE_ITEM_QUANTITY, payload: { ...product, quantity}})
   }
 
   // todo Get the total price of all items in the cart
   const getCartTotal = () => {
-    // todo
+    return getCartItems().reduce((acc, item) => acc + item.price * item.quantity, 0)
   }
 
   const getCartItems = () => {

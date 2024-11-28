@@ -5,7 +5,7 @@ import CardList from './components/CardList';
 import SingleView from './components/SingleView';
 import Cart from './components/Cart'; // Assuming you have a Cart component
 import { CartProvider } from './state/CartProvider'; // Assuming you have a CartContext
-import productData from './data/full-products';
+import Orders from './components/Orders';
 
 function App() {
   return (
@@ -17,10 +17,12 @@ function App() {
           <Route path="/" element={<CardList />} />
           <Route path="/product/:id" element={<SingleView />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/orders" element={<Orders />} />
+
         </Routes>
       </CartProvider>
     </div>
   );
-}
+};
 
 export default App;
