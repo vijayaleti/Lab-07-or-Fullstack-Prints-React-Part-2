@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import '../App.css';
-import { BASE_URL } from '../config
+import { BASE_URL } from '../config';
 import AddToCart from './AddToCart';
 
 export default function SingleView() {
