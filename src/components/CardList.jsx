@@ -1,14 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import Card from './Card';
-import Button from './Button';
+import React, { useState, useEffect } from 'react'
+import Card from './Card'
+import Button from './Button'
+import Search from './Search'
 import { BASE_URL } from '../config';
 
 const CardList = () => {
+  // define the limit state variable and set it to 10
   const limit = 10;
+
+  // Define the offset state variable and set it to 0
   const [offset, setOffset] = useState(0);
+  // Define the products state variable and set it to the default dataset
   const [products, setProducts] = useState([]);
 
-  // Fetch products with limit and offset
+
+  const filterTags = (tagQuery) => {
+    const filtered = data.filter(product => {
+      if (!tagQuery) {
+        return product
+      }
+
+      return product.tags.find(({title}) => title === tagQuery)
+    })
+
+    setOffset(0)
+    setProducts(filtered)
+  }
   const fetchProducts = () => {
     fetch(`${BASE_URL}/products?offset=${offset}&limit=${limit}`)
       .then((res) => res.json())
@@ -17,36 +34,25 @@ const CardList = () => {
       });
   };
 
-  // Use the useEffect hook to fetch the products when offset changes
   useEffect(() => {
     fetchProducts();
   }, [offset]);
 
-  // Define the handlePrevious function
-  const handlePrevious = () => {
-    // set the offset to the previous 10 products
-    setOffset((prevOffset) => Math.max(prevOffset - limit, 0));
-  };
-
-  // Define the handleNext function
-  const handleNext = () => {
-    // set the offset to the next 10 products
-    setOffset((prevOffset) => prevOffset + limit);
-  };
-
   return (
     <div className="cf pa2">
+      <Search handleSearch={filterTags}/>
       <div className="mt2 mb2">
-        {products && products.map((product) => (
-          <Card key={product.id} {...product} />
+      {products && products.map((product) => (
+          <Card key={product._id} {...product} />
         ))}
       </div>
+
       <div className="flex items-center justify-center pa4">
-        <Button text="Previous" handleClick={handlePrevious} />
-        <Button text="Next" handleClick={handleNext} />
+        <Button text="Previous" handleClick={() => setOffset(offset - limit)} />
+        <Button text="Next" handleClick={() => setOffset(offset + limit)} />
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default CardList;

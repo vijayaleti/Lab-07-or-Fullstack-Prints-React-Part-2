@@ -16,7 +16,7 @@ const Orders = () => {
   // Use the useEffect hook to fetch orders when the component mounts
   useEffect(() => {
     fetchOrders();
-  }, []); 
+  }, []);
 
   return (
     <div className="center mw7 ba mv4">
